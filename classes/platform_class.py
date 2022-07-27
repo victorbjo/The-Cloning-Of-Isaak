@@ -1,0 +1,5 @@
+HEIGHT = 800
+WIDTH = 800
+ACC = 2
+FRIC = -1
+FPS = 60
