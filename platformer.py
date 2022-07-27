@@ -4,11 +4,11 @@ import sys
 import time
 pygame.init()
 
+
 FramePerSec = pygame.time.Clock()
 from classes import *
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Game")
-    
 class platform(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()

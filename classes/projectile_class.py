@@ -9,7 +9,8 @@ class projectile(pygame.sprite.Sprite):
         self.surf = pygame.Surface((40,40))
         self.surf.fill((255,100,0))
         self.rect = self.surf.get_rect()
-        self.pos = vec(player.rect.midbottom)
+        self.pos = vec(player.rect.center)
+        self.rect.center = self.pos
         self.obstacles = player.obstacles
         self.mask = pygame.mask.from_surface(self.surf)
     def move(self):

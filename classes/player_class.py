@@ -6,7 +6,7 @@ vec = pygame.math.Vector2
 from pygame.locals import *
 import time
 class Player(pygame.sprite.Sprite):
-    def __init__(self, projectiles, obstacles):
+    def __init__(self, projectiles, obstacles, platform = None):
         super().__init__()
         self.image = self.surf = pygame.image.load(r"C:\Users\Victor\Desktop\projects\Isaac_Clone\Sprites/Isakk.png")
         self.stats = playerStats()
@@ -23,9 +23,9 @@ class Player(pygame.sprite.Sprite):
         self.obstacles = obstacles
         self.mask = pygame.mask.from_surface(self.surf)
         self.oldPos = self.rect.center
+        self.platform = platform
     def move(self):
         self.acc = vec(0,0)
-    
         pressed_keys = pygame.key.get_pressed()            
         if pressed_keys[K_a]:
             self.acc.x = -ACC
@@ -49,7 +49,6 @@ class Player(pygame.sprite.Sprite):
             self.pos.y = 20           
         oldCenter = self.rect.center
         
-        
         for entity in self.obstacles:
             offset_x = self.rect.x - entity.rect.x
             offset_y = self.rect.y - entity.rect.y
@@ -57,9 +56,9 @@ class Player(pygame.sprite.Sprite):
                 self.acc = vec(0,0)
                 self.rect.center = self.oldPos
                 self.pos = self.rect.center
-            else:
-                self.oldPos = self.rect.center
-                self.rect.center = self.pos
+                return
+        self.oldPos = self.rect.center
+        self.rect.center = self.pos
     def attack0(self, event, press = True):
         if press:
             if event == K_DOWN or event == K_UP or event == K_RIGHT or event == K_LEFT:
@@ -85,3 +84,5 @@ class Player(pygame.sprite.Sprite):
         Projectile = projectile(self)
         #Projectile = projectile(self.attack_dir, self.rect.midbottom)
         self.projectiles.add(Projectile)
+        self.platform.all_sprites.add(Projectile)
+        self.platform.movable_sprites.add(Projectile)
