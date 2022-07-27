@@ -10,7 +10,21 @@ class projectile(pygame.sprite.Sprite):
         self.surf.fill((255,100,0))
         self.rect = self.surf.get_rect()
         self.pos = vec(player.rect.midbottom)
+        self.obstacles = player.obstacles
+        self.mask = pygame.mask.from_surface(self.surf)
     def move(self):
+        oldPos = self.pos
+        oldCenter = self.rect.center
         self.pos.x += self.dir[0]
         self.pos.y += self.dir[1]
-        self.rect.midbottom = self.pos  
+        self.rect.center = self.pos
+        if self.check_collision():
+            self.kill()
+    #Check for mask collisions
+    def check_collision(self):
+        for entity in self.obstacles:
+            offset_x = self.rect.x - entity.rect.x
+            offset_y = self.rect.y - entity.rect.y
+            if(entity.mask.overlap(self.mask, (offset_x, offset_y))):
+                return True
+        return False

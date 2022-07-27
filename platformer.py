@@ -15,6 +15,7 @@ class platform(pygame.sprite.Sprite):
         self.surf = pygame.Surface((WIDTH, 20))
         self.rect = self.surf.get_rect(center = (WIDTH/2, HEIGHT - 10))
 friendly_projectiles = pygame.sprite.Group()
+collisonable_sprites = pygame.sprite.Group()
 all_sprites = pygame.sprite.Group()
 obstacles = pygame.sprite.Group()
 PT1 = platform()
@@ -24,8 +25,9 @@ obs = obstacle((200,200))
 all_sprites.add(PT1)
 obstacles.add(obs)
 all_sprites.add(P1)
+collisonable_sprites.add(P1, obs)
 #friendly_projectiles.add(Projectile)
- 
+
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:
