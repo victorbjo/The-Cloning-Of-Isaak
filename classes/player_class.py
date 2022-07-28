@@ -6,12 +6,13 @@ vec = pygame.math.Vector2
 from pygame.locals import *
 import time
 class Player(pygame.sprite.Sprite):
-    def __init__(self, projectiles, obstacles, platform = None):
+    def __init__(self, projectiles, obstacles, pos, platform = None):
         super().__init__()
         self.image = self.surf = pygame.image.load(r"C:\Users\Victor\Desktop\projects\Isaac_Clone\Sprites/Isakk.png")
         self.stats = playerStats()
         self.rect = self.image.get_rect()
-        self.pos = vec((10, 385))
+        self.rect.center = pos
+        self.pos = pos
         self.vel = vec(0,0)
         self.acc = vec(0,0)
         self.projectiles = projectiles

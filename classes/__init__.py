@@ -4,3 +4,4 @@ from .obstacle_class import *
 from .player_class import *
 from .platform_class import *
 from .platform_class import *
+from .map_generator_class import *
