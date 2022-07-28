@@ -6,22 +6,22 @@ vec = pygame.math.Vector2
 from pygame.locals import *
 import time
 class Player(pygame.sprite.Sprite):
-    def __init__(self, projectiles, obstacles, pos, platform = None):
+    def __init__(self, pos, platform = None):
         super().__init__()
-        self.image = self.surf = pygame.image.load(r"C:\Users\Victor\Desktop\projects\Isaac_Clone\Sprites/Isakk.png")
+        self.image = pygame.image.load(r"C:\Users\Victor\Desktop\projects\Isaac_Clone\Sprites/Isakk.png")
+        self.image = self.surf = pygame.transform.scale(self.image, (HEIGHT/HEIGHT_BLOCKS*0.8, WIDTH/WIDTH_BLOCKS*0.8))
         self.stats = playerStats()
         self.rect = self.image.get_rect()
         self.rect.center = pos
         self.pos = pos
         self.vel = vec(0,0)
         self.acc = vec(0,0)
-        self.projectiles = projectiles
+        self.projectiles = platform.friendly_projectiles
         self.lastShot = 0
         self.movePressed = False
         self.attack_in_progress = False
         self.attack_dir = None
         self.attack_keys = [K_UP, K_DOWN, K_LEFT, K_RIGHT]
-        self.obstacles = obstacles
         self.mask = pygame.mask.from_surface(self.surf)
         self.oldPos = self.rect.center
         self.platform = platform
@@ -50,7 +50,7 @@ class Player(pygame.sprite.Sprite):
             self.pos.y = 20           
         oldCenter = self.rect.center
         
-        for entity in self.obstacles:
+        for entity in self.platform.obstacles:
             offset_x = self.rect.x - entity.rect.x
             offset_y = self.rect.y - entity.rect.y
             if(entity.mask.overlap(self.mask, (offset_x, offset_y))):

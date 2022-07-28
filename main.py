@@ -8,17 +8,17 @@ from classes import *
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Game")
 platform = platforms()
-P1 = Player(platform.friendly_projectiles, platform.obstacles, (WIDTH/2, HEIGHT/2), platform)
+P1 = Player((WIDTH/2, HEIGHT/2), platform)
 platform.all_sprites.add(P1)
 platform.movable_sprites.add(P1)
 obs = obstacle((200,200))
 displaysurface.blit(platform.platform.surf, platform.platform.rect)
 map = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-        [1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
-        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
+        [1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,1],
+        [1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
+        [1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1],
         [1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
         [1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1],
         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],

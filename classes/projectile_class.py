@@ -4,6 +4,7 @@ class projectile(pygame.sprite.Sprite):
     def __init__(self, player):
         super().__init__()
         speed = player.stats.projectile_speed
+        self.platform = player.platform
         direction ={"up": (0,-speed) , "down": (0,speed), "right":(speed,0), "left":(-speed,0)}
         self.dir = direction[player.attack_dir]
         self.surf = pygame.Surface((40,40))
@@ -11,7 +12,7 @@ class projectile(pygame.sprite.Sprite):
         self.rect = self.surf.get_rect()
         self.pos = vec(player.rect.center)
         self.rect.center = self.pos
-        self.obstacles = player.obstacles
+        self.obstacles = self.platform.obstacles
         self.mask = pygame.mask.from_surface(self.surf)
     def move(self):
         oldPos = self.pos
