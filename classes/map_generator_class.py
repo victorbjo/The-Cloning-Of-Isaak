@@ -3,7 +3,9 @@
 from .obstacle_class import *
 from .platform_class import *
 #Add an obstacle class for 1 in map. Add to platform.all_sprites
-def generate_map(platform : platforms, width, height, map):
+def generate_map(platform : platforms, map):
+    height = len(map)
+    width = len(map[0])
     for idy, i in enumerate(map):
         for idx, j in enumerate(i):
             if j == 1:

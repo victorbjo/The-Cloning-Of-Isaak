@@ -10,7 +10,7 @@ class platforms(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.friendly_projectiles = pygame.sprite.Group()#Every moving projectile. Can be deleted
-        self.collisonable_sprites = pygame.sprite.Group()#sprites that can collide with the player
+        self.collisionable_sprites = pygame.sprite.Group()#sprites that can collide with the player
         self.all_sprites = pygame.sprite.Group()#all sprites
         self.movable_sprites = pygame.sprite.Group()#All sprites that can move
         self.obstacles = pygame.sprite.Group()#For (?Pseudo?) static obstacle. Can be deleted

@@ -5,3 +5,5 @@ from .player_class import *
 from .platform_class import *
 from .platform_class import *
 from .map_generator_class import *
+from .sprite_class import *
+from .base_enemy_class import *

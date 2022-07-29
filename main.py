@@ -9,6 +9,7 @@ displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Game")
 platform = platforms()
 P1 = Player((WIDTH/2, HEIGHT/2), platform)
+Enemy = enemy_base(platform, (WIDTH/2+50, HEIGHT/2+20),r"C:\Users\Victor\Desktop\projects\Isaac_Clone\Sprites/enemy.png" )
 platform.all_sprites.add(P1)
 platform.movable_sprites.add(P1)
 obs = obstacle((200,200))
@@ -23,8 +24,8 @@ map = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
         [1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1],
         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
-generate_map(platform, 17, 11, map)
+        [1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1]]
+generate_map(platform, map)
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:
