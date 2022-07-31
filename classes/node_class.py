@@ -30,13 +30,23 @@ def grid_to_nodes(grid):
     for i in range(len(grid)):
         for j in range(len(grid[0])):
             if grid[i][j] == 0:
-                nodes.append(Node((i,j), (i,j)))
+                nodes.append(Node((j,i), (j,i)))
     add_connections(nodes)
     return nodes
 
 #euclidean distance
 def distance(start, goal):
     return ((start[0] - goal[0])**2 + (start[1] - goal[1])**2)**0.5
+
+#resets f,g and h values for all nodes
+def reset_fgh(nodes):
+    for node in nodes:
+        node.f = 0
+        node.g = 0
+        node.h = 0
+        node.backpointer = None
+    return nodes 
+
 #astar algorithm for pathfinding
 def aStar(start, goal):
     openList = []

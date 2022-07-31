@@ -27,9 +27,14 @@ class platforms(pygame.sprite.Sprite):
         for node in self.nodeMap:
             if node.id == (posX, posY):
                 return node
+    def get_pos_from_node(self, node):
+        posX = node.id[0]*(WIDTH/WIDTH_BLOCKS)
+        posY = node.id[1]*(HEIGHT/HEIGHT_BLOCKS)
+        return (posX, posY)
     def get_path(self, start, end):
         try:
             path = aStar(end, start)
+            reset_fgh(self.nodeMap)
             return path
         except:
             return None
