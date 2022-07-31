@@ -11,7 +11,7 @@ class enemy_follower(enemy_base):
         self.rect.center = (200,200)
         self.pos.x = 200
         self.pos.y = 200
-    def move(self):
+    def move(self): #This needs to be redone
         direction = self.getDirection(self.platform.player.pos)
         oldPos = vec(self.pos.x, self.pos.y)
         self.pos.x += direction[0]*self.stats.speed
@@ -30,7 +30,7 @@ class enemy_follower(enemy_base):
                 self.pos.x += newDir[0]*self.stats.speed
                 self.pos.y += newDir[1]*self.stats.speed
                 self.rect.center = self.pos  
-        
+                #Check again for collision. If collision follow same path as before
     def follow(self):
         enemyNode = self.platform.get_node_from_pos(self.pos)
         playerPos = vec(self.platform.player.pos[0], self.platform.player.pos[1])
