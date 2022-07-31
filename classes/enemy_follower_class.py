@@ -11,6 +11,8 @@ class enemy_follower(enemy_base):
         self.pos.x = 200
         self.pos.y = 200
     def move(self):
+        self.follow()
+        return
         direction = self.getDirection()
         oldPos = vec(self.pos.x, self.pos.y)
         self.pos.x += direction[0]*self.stats.speed
@@ -23,12 +25,20 @@ class enemy_follower(enemy_base):
             offset_x = self.rect.x - entity.rect.x
             offset_y = self.rect.y - entity.rect.y
             if(entity.mask.overlap(self.mask, (offset_x, offset_y))):
-                print(self.pos)
                 self.rect.center = oldRect
                 self.pos = oldPos
         
     def follow(self):
-        print(self.platform.player.rect.center)
+        enemyNode = self.platform.get_node_from_pos(self.pos)
+        playerPos = vec(self.platform.player.pos[0], self.platform.player.pos[1])
+        playerNode = self.platform.get_node_from_pos(playerPos)
+        if playerNode.id == (7,5):
+            oldNodeMap = self.platform.nodeMap.copy()
+            path = self.platform.get_path(enemyNode, playerNode)
+            print(path)
+            self.platform.nodeMap = oldNodeMap
+        #print(playerNode)
+        #print(enemyNode)
     def getDirection(self):
         enemyLoc = self.platform.player.pos
         loc = self.rect.center

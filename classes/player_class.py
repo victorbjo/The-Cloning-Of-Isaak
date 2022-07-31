@@ -49,7 +49,7 @@ class Player(pygame.sprite.Sprite):
         elif self.pos.y < 20:
             self.pos.y = 20           
         oldCenter = self.rect.center
-        
+        self.platform.get_node_from_pos(self.pos)
         for entity in self.platform.obstacles:
             offset_x = self.rect.x - entity.rect.x
             offset_y = self.rect.y - entity.rect.y

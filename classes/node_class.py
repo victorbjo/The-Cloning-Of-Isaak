@@ -11,13 +11,7 @@ class Node:
         self.backpointer = None
     def __repr__(self) -> str:
         return "n"+str(self.id)
-def grid_to_nodes(grid):
-    nodes = []
-    for i in range(len(grid)):
-        for j in range(len(grid[0])):
-            if grid[i][j] == 0:
-                nodes.append(Node((i,j), (i,j)))
-    return nodes
+
 #add connections to nodes in nodelist
 def add_connections(nodes):
     for node in nodes:
@@ -30,6 +24,16 @@ def add_connections(nodes):
             if nodeTemp.id in ids:
                 node.connections.append(nodeTemp)
     return nodes
+
+def grid_to_nodes(grid):
+    nodes = []
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
+            if grid[i][j] == 0:
+                nodes.append(Node((i,j), (i,j)))
+    add_connections(nodes)
+    return nodes
+
 #euclidean distance
 def distance(start, goal):
     return ((start[0] - goal[0])**2 + (start[1] - goal[1])**2)**0.5
@@ -65,20 +69,21 @@ def aStar(start, goal):
                         node.g = current.g + 1
                         node.backpointer = current
     return None
-map = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-        [1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
-        [1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,1],
-        [1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
-        [1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1],
-        [1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
-        [1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1],
-        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-        [1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1]]
-nodes = grid_to_nodes(map)
-nodes = add_connections(nodes)
-print(nodes[60])
-print(nodes[17].connections)
-print(aStar(nodes[0], nodes[60]))
-#print(nodes)
+if __name__ == "__main__":
+    map = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
+            [1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1],
+            [1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1]]
+    nodes = grid_to_nodes(map)
+    nodes = add_connections(nodes)
+    print(nodes[60])
+    print(nodes[17].connections)
+    print(aStar(nodes[0], nodes[60]))
+    #print(nodes)

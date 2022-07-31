@@ -7,6 +7,7 @@ FRIC = -1
 FPS = 60
 import pygame
 from .getWorkingDir import *
+from .node_class import *
 class platforms(pygame.sprite.Sprite):
     def __init__(self, map):
         super().__init__()
@@ -19,6 +20,19 @@ class platforms(pygame.sprite.Sprite):
         self.platform = self.__nested_platform()
         self.relativeDir = getRelativePath()
         self.map = map
+        self.nodeMap = grid_to_nodes(self.map)
+    def get_node_from_pos(self, pos):
+        posX = int(pos.x/(WIDTH/WIDTH_BLOCKS))
+        posY = int(pos.y/(HEIGHT/HEIGHT_BLOCKS))
+        for node in self.nodeMap:
+            if node.id == (posX, posY):
+                return node
+    def get_path(self, start, end):
+        try:
+            path = aStar(end, start)
+            return path
+        except:
+            return None
     class __nested_platform(pygame.sprite.Sprite):
         def __init__(self):
             super().__init__()
