@@ -7,13 +7,6 @@ FramePerSec = pygame.time.Clock()
 from classes import *
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Game")
-platform = platforms()
-P1 = Player((WIDTH/2, HEIGHT/2), platform)
-Enemy = enemy_base(platform, (WIDTH/2+50, HEIGHT/2+20),r"C:\Users\Victor\Desktop\projects\Isaac_Clone\Sprites/enemy.png" )
-platform.all_sprites.add(P1)
-platform.movable_sprites.add(P1)
-obs = obstacle((200,200))
-displaysurface.blit(platform.platform.surf, platform.platform.rect)
 map = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
         [1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
@@ -25,7 +18,17 @@ map = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
         [1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1]]
-generate_map(platform, map)
+platform = platforms(map)
+generate_map(platform, platform.map)
+P1 = Player((WIDTH/2, HEIGHT/2), platform)
+platform.player = P1
+Enemy = enemy_base(platform, (WIDTH/2+50, HEIGHT/2+20),platform.relativeDir+"/Sprites/enemy.png")
+Follower = enemy_follower(platform, (WIDTH/2+150, HEIGHT/2+20),platform.relativeDir+"/Sprites/enemy.png")
+platform.all_sprites.add(P1)
+platform.movable_sprites.add(P1)
+obs = obstacle((200,200))
+displaysurface.blit(platform.platform.surf, platform.platform.rect)
+
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:

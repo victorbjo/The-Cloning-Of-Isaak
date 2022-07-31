@@ -7,7 +7,7 @@ class projectile(pygame.sprite.Sprite):
         self.platform = player.platform
         direction ={"up": (0,-speed) , "down": (0,speed), "right":(speed,0), "left":(-speed,0)}
         self.dir = direction[player.attack_dir]
-        self.surf = pygame.Surface((40,40))
+        self.surf = pygame.Surface((20,20))
         self.surf.fill((255,100,0))
         self.rect = self.surf.get_rect()
         self.pos = vec(player.rect.center)

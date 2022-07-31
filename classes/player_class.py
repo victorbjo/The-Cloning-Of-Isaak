@@ -8,7 +8,7 @@ import time
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, platform = None):
         super().__init__()
-        self.image = pygame.image.load(r"C:\Users\Victor\Desktop\projects\Isaac_Clone\Sprites/Isakk.png")
+        self.image = pygame.image.load(platform.relativeDir+"/Sprites/Isakk.png")
         self.image = self.surf = pygame.transform.scale(self.image, (HEIGHT/HEIGHT_BLOCKS*0.8, WIDTH/WIDTH_BLOCKS*0.8))
         self.stats = playerStats()
         self.rect = self.image.get_rect()
