@@ -4,4 +4,5 @@ class playerStats():
         self.speed = -1
         self.fire_rate = 0.5
         self.projectile_speed = 4
+        self.projectile_damage = 2
         

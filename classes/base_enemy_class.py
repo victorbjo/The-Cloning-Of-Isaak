@@ -10,5 +10,6 @@ class enemy_base(sprite_movable):
         self.platform.movable_sprites.add(self)
         self.platform.all_sprites.add(self)
         self.platform.obstacles.add(self)
+        self.health = 10
     def update_state():
         pass

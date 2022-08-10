@@ -1,7 +1,9 @@
-list = [2,2]
-list.append(3)
-list.append([])
-list[3] += [4,5]
-
-
-print(list)
+import pygame
+vec = pygame.math.Vector2 
+ass = vec(1,2)
+print(ass)
+print(ass.x)
+asd = ass.x
+print(asd)
+ass.x += 22
+print(asd)
