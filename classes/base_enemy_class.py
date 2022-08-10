@@ -13,3 +13,7 @@ class enemy_base(sprite_movable):
         self.health = 10
     def update_state():
         pass
+    def take_damage(self, damage):
+        self.health -= damage
+        if self.health <=0:
+            self.kill()

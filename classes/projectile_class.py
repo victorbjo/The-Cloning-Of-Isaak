@@ -25,6 +25,8 @@ class projectile(pygame.sprite.Sprite):
         entity = self.check_collision()
         if entity:
             print(issubclass(type(entity), enemy_base))
+            if issubclass(type(entity), enemy_base) and not issubclass(type(self), enemy_base):
+                entity.take_damage(self.damage)
             self.kill()
     #Check for mask collisions
     def check_collision(self):
