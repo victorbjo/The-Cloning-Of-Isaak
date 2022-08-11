@@ -54,6 +54,9 @@ class enemy_follower(enemy_base):
             offset_x = self.rect.x - entity.rect.x
             offset_y = self.rect.y - entity.rect.y
             if(entity.mask.overlap(self.mask, (offset_x, offset_y))):
+                if entity.__class__.__name__ == "Player":
+                    entity.take_damage(1)
+                    print("Player Health: ", entity.stats.health)
                 return True
     def follow(self):
         enemyNode = self.platform.get_node_from_pos(self.pos)
@@ -61,10 +64,10 @@ class enemy_follower(enemy_base):
         playerNode = self.platform.get_node_from_pos(playerPos)
         
         path = self.platform.get_path(enemyNode, playerNode)
-        print(enemyNode)
-        print(path[1])
+        #print(enemyNode)
+        #print(path[1])
         nextNodePos = self.platform.get_pos_from_node(path[1])
-        print(nextNodePos)
+        #print(nextNodePos)
         return self.getDirectionFromPath(enemyNode,path[1])
         #print(playerNode)
         #print(enemyNode)

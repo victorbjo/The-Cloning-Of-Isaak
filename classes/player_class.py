@@ -87,3 +87,7 @@ class Player(pygame.sprite.Sprite):
         self.projectiles.add(Projectile)
         self.platform.all_sprites.add(Projectile)
         self.platform.movable_sprites.add(Projectile)
+    def take_damage(self, damage):
+        self.stats.health -= damage
+        if self.stats.health <=0:
+            self.kill()
