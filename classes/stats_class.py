@@ -6,6 +6,7 @@ class stats():
         self.projectile_speed = 4
         self.projectile_damage = 2
         self.health = 7
+        self.maxHealth = self.health
     def takeDamage(self, damage = 1):
         self.health -= damage
         

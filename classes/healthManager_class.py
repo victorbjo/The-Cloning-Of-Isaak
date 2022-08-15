@@ -19,14 +19,17 @@ class healthManager(pygame.sprite.Sprite):
         for entity in self.hp:
             entity.kill()
         self.hp = []
-        for i in range(self.player.stats.health//2):
-            self.hp.append(healthSprite(self.platform, WIDTH/WIDTH_BLOCKS+WIDTH_BLOCKS+50*i, HEIGHT/HEIGHT_BLOCKS+HEIGHT_BLOCKS))
-        #If the health is odd, draw a half heart
-        if(self.player.stats.health%2 == 1):
-            self.hp.append(healthSprite(self.platform, WIDTH/WIDTH_BLOCKS+WIDTH_BLOCKS+50*len(self.hp), HEIGHT/HEIGHT_BLOCKS+HEIGHT_BLOCKS, "normal_half"))
-        #If the health is 0, draw a empty heart
-        if(self.player.stats.health == 0):
-            self.hp.append(healthSprite(self.platform, WIDTH/WIDTH_BLOCKS+WIDTH_BLOCKS+50*len(self.hp), HEIGHT/HEIGHT_BLOCKS+HEIGHT_BLOCKS, "normal_empty"))
+        print(self.player.stats.health, " Health")
+        spriteSrc = "normal_full"
+        for i in range(self.player.stats.maxHealth//2):
+            if self.player.stats.health >= (i+1)*2:
+                spriteSrc = "normal_full"
+            elif self.player.stats.health == (i+1)*2-1:
+                spriteSrc = "normal_half"
+            else:
+                spriteSrc = "normal_empty"
+            self.hp.append(healthSprite(self.platform, WIDTH/WIDTH_BLOCKS+WIDTH_BLOCKS+50*i, HEIGHT/HEIGHT_BLOCKS+HEIGHT_BLOCKS, spriteSrc))
+        if self.player.stats.health == 0:
             self.player.kill()
     def update(self):
         if self.player.stats.health != self.lastHp:
