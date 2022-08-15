@@ -2,15 +2,18 @@ import pygame
 from .stats_class import *
 from .platform_class import *
 from .projectile_class import *
+from .healthManager_class import *
 vec = pygame.math.Vector2
 from pygame.locals import *
 import time
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, platform = None):
+        self.stats = stats()
         super().__init__()
+        platform.all_sprites.add(self)
+        self.healthManager = healthManager(self, platform)
         self.image = pygame.image.load(platform.relativeDir+"/Sprites/Isakk.png")
         self.image = self.surf = pygame.transform.scale(self.image, (HEIGHT/HEIGHT_BLOCKS*0.8, WIDTH/WIDTH_BLOCKS*0.8))
-        self.stats = playerStats()
         self.rect = self.image.get_rect()
         self.rect.center = pos
         self.pos = pos
@@ -26,6 +29,7 @@ class Player(pygame.sprite.Sprite):
         self.oldPos = self.rect.center
         self.platform = platform
     def move(self):
+        self.healthManager.update()
         self.acc = vec(0,0)
         pressed_keys = pygame.key.get_pressed()            
         if pressed_keys[K_a]:
@@ -88,6 +92,6 @@ class Player(pygame.sprite.Sprite):
         self.platform.all_sprites.add(Projectile)
         self.platform.movable_sprites.add(Projectile)
     def take_damage(self, damage):
-        self.stats.health -= damage
+        self.stats.takeDamage(damage)
         if self.stats.health <=0:
             self.kill()

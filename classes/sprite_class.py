@@ -8,7 +8,7 @@ class sprite_movable(pygame.sprite.Sprite):
         self.image = pygame.image.load(path)
         self.surf = pygame.transform.scale(self.image, (HEIGHT/HEIGHT_BLOCKS*0.8, WIDTH/WIDTH_BLOCKS*0.8))
         self.rect = self.image.get_rect()
-        self.stats = playerStats()
+        self.stats = stats()
         direction ={"up": (0,-1) , "down": (0,1), "right":(1,0), "left":(-1,0), None:(0,0)}
         self.dir = direction[None]
         self.mask = pygame.mask.from_surface(self.surf)

@@ -24,7 +24,7 @@ P1 = Player((WIDTH/2, HEIGHT/2), platform)
 platform.player = P1
 Enemy = enemy_base(platform, (WIDTH/2+50, HEIGHT/2+20),platform.relativeDir+"/Sprites/enemy.png")
 Follower = enemy_follower(platform, (WIDTH/2+150, HEIGHT/2+20),platform.relativeDir+"/Sprites/enemy.png")
-platform.all_sprites.add(P1)
+
 platform.movable_sprites.add(P1)
 obs = obstacle((200,200))
 displaysurface.blit(platform.platform.surf, platform.platform.rect)
@@ -42,6 +42,7 @@ while True:
     P1.spawn_bullets()
     for entity in platform.all_sprites:
         displaysurface.blit(entity.surf, entity.rect)
+    platform.front_sprites.draw(displaysurface)
     for entity in platform.movable_sprites:
         entity.move()
     pygame.display.update()
