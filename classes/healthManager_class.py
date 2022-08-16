@@ -21,10 +21,10 @@ class healthManager(pygame.sprite.Sprite):
         self.hp = []
         print(self.player.stats.health, " Health")
         spriteSrc = "normal_full"
-        for i in range(self.player.stats.maxHealth//2):
+        for i in range((self.player.stats.maxHealth+1)//2):
             if self.player.stats.health >= (i+1)*2:
                 spriteSrc = "normal_full"
-            elif self.player.stats.health == (i+1)*2-1:
+            elif self.player.stats.health == ((i+1)*2)-1:
                 spriteSrc = "normal_half"
             else:
                 spriteSrc = "normal_empty"
