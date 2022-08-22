@@ -22,12 +22,14 @@ class platforms(pygame.sprite.Sprite):
         self.relativeDir = getRelativePath()
         self.map = map
         self.nodeMap = grid_to_nodes(self.map)
+        self.tileSize = WIDTH/WIDTH_BLOCKS
     def get_node_from_pos(self, pos):
         posX = int(pos.x/(WIDTH/WIDTH_BLOCKS))
         posY = int(pos.y/(HEIGHT/HEIGHT_BLOCKS))
         for node in self.nodeMap:
             if node.id == (posX, posY):
                 return node
+        return pos.x
     def get_pos_from_node(self, node):
         posX = node.id[0]*(WIDTH/WIDTH_BLOCKS)
         posY = node.id[1]*(HEIGHT/HEIGHT_BLOCKS)

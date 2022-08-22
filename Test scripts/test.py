@@ -1,1 +1,1 @@
-print(5%2)
+print(not not True)
