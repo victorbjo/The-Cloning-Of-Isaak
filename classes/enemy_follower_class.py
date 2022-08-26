@@ -12,48 +12,38 @@ class enemy_follower(enemy_base):
         self.pos.x = 200
         self.pos.y = 200
         self.newDir = self.getDirection(self.platform.player.pos)
-        self.lastDirection = None
-        self.lastGrid = [self.platform.get_node_from_pos(self.pos).id, self.platform.get_node_from_pos(self.pos).id]
+        self.lastDirection = [self.platform.get_node_from_pos(self.pos).id, self.platform.get_node_from_pos(self.pos).id]
         self.movementQueue = [vec(1,1)]
-
+        self.direction = 0
 
     def move(self) -> None:
         if self.movementQueue:
-            direction = self.movementQueue.pop(0)
-            if not self.validMove(direction):
-                direction = self.getDirection(self.platform.player.pos) 
+            print("SUCCESS", self.platform.player.stats.health)
+            self.direction = self.movementQueue.pop(0)
+            print(self.direction)
+            if not self.validMove(self.direction):
+                print("FAIL")
+                self.direction = self.getDirection(self.platform.player.pos) 
         else:
-            direction = self.getDirection(self.platform.player.pos)
+            self.direction = self.getDirection(self.platform.player.pos)
         moveBack = [vec(-1,-1), vec(1,-1), vec(-1,1), vec(1,1)]
         #self.movementQueue.append(vec(1,1))
-        if not self.validMove(direction):
-            lastFollow = self.lastDirection
-            direction = self.follow()
-            self.lastDirection = vec(0,1)
-            if not self.validMove(direction):
-                print(self.validMove(vec(1,1)))
-                print("Collison", self.checkCollision())
-                #playerPos = vec(self.platform.player.pos[0], self.platform.player.pos[1])
-                #playerNode = self.platform.get_node_from_pos(playerPos)
-                #gridNode = self.lastGrid[0]
-                #print(self.lastGrid, "gridNode")
-                #path = self.platform.get_path(self.lastGrid[0], playerNode)
-                #print(path, " path")
-                #rint(playerNode, " playerNode")
-                #print(self.lastGrid[0], " lastGrid")
-                direction = self.lastGrid[0] #self.self.getDirectionFromPath(self.lastGrid[0],path[1])
-                
-            #return
-        #self.lastDirection = direction.copy()
-        if self.validMove(direction):
-            self.pos.x += direction[0]*self.stats.speed
-            self.pos.y += direction[1]*self.stats.speed
+        if not self.validMove(self.direction):
+            self.direction = self.follow()
+            if not self.validMove(self.direction):
+                self.direction = self.lastDirection[0] #self.self.getDirectionFromPath(self.lastGrid[0],path[1])
+
+        if self.validMove(self.direction):
+            self.pos.x += self.direction[0]*self.stats.speed
+            self.pos.y += self.direction[1]*self.stats.speed
             self.rect.center = self.pos.copy()
             collision = self.checkCollision()
             if collision == "Player":
-                self.movementQueue = []
-                #for x in range(8):
-                    #self.movementQueue.append(vec(-1,-1))
+                self.hitPlayer()
+                for x in range(8):
+                        self.movementQueue.append((-self.direction[0]*2,-self.direction[1]*2))
+                    
+                
             elif collision == True:
                 print("WHAT THE FUCK")
             
@@ -77,41 +67,10 @@ class enemy_follower(enemy_base):
         state = self.checkCollision()
         self.rect = oldRect.copy()
         self.pos = oldPos.copy()
+        if state == "Player":
+            return True
         return not state
-    def moveOld(self): #This needs to be redone. Make move Queue.
-        #Move queue should be a list of directions to move in. Eg if following a*
-        # path, the move queue should be a list of directions to move in to get to
-        # the player. If the player moves, the move queue should be recalculated.
-        # if move queue is empty, the enemy should go straight towards the player.
-        # if the enemy is in the same node as the player, the enemy should bounce back using move queue.
-        if self.movementQueue:
-            direction = self.movementQueue[0]
-        else:
-            direction = self.getDirection(self.platform.player.pos)
-        oldPos = vec(float(self.pos.x), float(self.pos.y)).copy()
-        self.pos.x += direction[0]*self.stats.speed
-        self.pos.y += direction[1]*self.stats.speed
-        oldRect = self.rect.center
-        self.rect.center = self.pos
-        if self.checkCollision():
-            self.rect.center = oldRect
-            self.pos = oldPos.copy()
-            self.newDir = self.follow()
-            self.lastDirections.insert(0,self.newDir.copy())
-            self.pos.x += self.newDir[0]*self.stats.speed
-            self.pos.y += self.newDir[1]*self.stats.speed
-            self.rect.center = self.pos
-            if self.checkCollision():
-                #print(self.pos)
-                self.lastDirections.pop(0)
-                self.pos = oldPos
-                self.pos.x += self.lastDirections[0][0]*self.stats.speed
-                self.pos.y += self.lastDirections[0][1]*self.stats.speed
-                self.rect.center = self.pos
-            else:
-                pass #self.lastDirections = self.newDir.copy()
-            #self.lastDirection = self.newDir
-            #Check again for collision. If collision follow same path as before
+
     def checkCollision(self):
         for entity in self.platform.all_sprites:
             if entity == self:
@@ -120,10 +79,13 @@ class enemy_follower(enemy_base):
             offset_y = self.rect.y - entity.rect.y
             if(entity.mask.overlap(self.mask, (offset_x, offset_y))):
                 if entity.__class__.__name__ == "Player":
-                    entity.take_damage(1)
-                    print("Player Health: ", entity.stats.health)
                     return "Player"
                 return True
+    
+    def hitPlayer(self):
+        print("FUUUUCK")#, self.movementQueue)#Also print movement queue
+        self.platform.player.take_damage(1)
+        print("Player Health: ", self.platform.player.stats.health)
     def follow(self):
         enemyNode = self.platform.get_node_from_pos(self.pos)
         playerPos = vec(self.platform.player.pos[0], self.platform.player.pos[1])
@@ -134,9 +96,9 @@ class enemy_follower(enemy_base):
         nextNodePos = self.platform.get_pos_from_node(path[1])
         #print(nextNodePos)
         newDir = self.getDirectionFromPath(enemyNode,path[1])
-        if self.lastGrid[1] != newDir:
-            self.lastGrid.pop(0)
-            self.lastGrid.append(newDir)
+        if self.lastDirection[1] != newDir:
+            self.lastDirection.pop(0)
+            self.lastDirection.append(newDir)
         return newDir
         #print(playerNode)
         #print(enemyNode)
