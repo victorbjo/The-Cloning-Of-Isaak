@@ -2,6 +2,7 @@
 #60 pixels per tile.
 from .obstacle_class import *
 from .platform_class import *
+from .enemy_follower_class import *
 #Add an obstacle class for 1 in map. Add to platform.all_sprites
 def generate_map(platform : platforms, map):
     height = len(map)
@@ -12,7 +13,10 @@ def generate_map(platform : platforms, map):
                 tempObstacle = obstacle(((WIDTH/width)*idx, HEIGHT/height*idy))
                 platform.obstacles.add(tempObstacle)
                 platform.all_sprites.add(tempObstacle)
-            
+            elif j == 10:
+                pass
+                print("BIG FUCK")
+                enemy_follower(platform,((WIDTH/width)*idx, HEIGHT/height*idy),platform.relativeDir+"/Sprites/enemy.png")
     #tempObstacle1 = obstacle(((WIDTH/width)*4, HEIGHT/height))
     #tempObstacle = obstacle(((WIDTH/width)*2, HEIGHT/height))
     #platform.obstacles.add(tempObstacle, tempObstacle1)

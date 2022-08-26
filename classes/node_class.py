@@ -29,7 +29,7 @@ def grid_to_nodes(grid):
     nodes = []
     for i in range(len(grid)):
         for j in range(len(grid[0])):
-            if grid[i][j] == 0:
+            if grid[i][j] != 1:
                 nodes.append(Node((j,i), (j,i)))
     add_connections(nodes)
     return nodes

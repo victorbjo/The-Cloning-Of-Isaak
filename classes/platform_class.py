@@ -27,8 +27,10 @@ class platforms(pygame.sprite.Sprite):
         posX = int(pos.x/(WIDTH/WIDTH_BLOCKS))
         posY = int(pos.y/(HEIGHT/HEIGHT_BLOCKS))
         for node in self.nodeMap:
+            print(node.id)
             if node.id == (posX, posY):
                 return node
+        print(posX, posY)
         return pos.x
     def get_pos_from_node(self, node):
         posX = node.id[0]*(WIDTH/WIDTH_BLOCKS)

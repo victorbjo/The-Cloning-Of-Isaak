@@ -8,9 +8,9 @@ class enemy_follower(enemy_base):
     def __init__(self, platform, pos, path):
         super().__init__(platform, pos, path)
         self.stats.speed = 1
-        self.rect.center = (200,200)
-        self.pos.x = 200
-        self.pos.y = 200
+        self.rect.center = pos
+        self.pos.x = pos[0]
+        self.pos.y = pos[1]
         self.newDir = self.getDirection(self.platform.player.pos)
         self.lastDirection = [self.platform.get_node_from_pos(self.pos).id, self.platform.get_node_from_pos(self.pos).id]
         self.movementQueue = [vec(1,1)]

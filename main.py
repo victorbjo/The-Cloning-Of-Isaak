@@ -11,19 +11,22 @@ map = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
         [1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
         [1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,1],
-        [1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
-        [1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1],
+        [1,0,0,0,0,0,0,0,10,0,0,0,0,1,0,0,1],
+        [1,0,0,10,0,0,0,0,0,0,0,0,1,1,1,0,1],
         [1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
         [1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1],
         [1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1],
         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
         [1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1]]
 platform = platforms(map)
-generate_map(platform, platform.map)
+
 P1 = Player((WIDTH/2, HEIGHT/2), platform)
 platform.player = P1
+generate_map(platform, platform.map)
 Enemy = enemy_base(platform, (WIDTH/2+50, HEIGHT/2+20),platform.relativeDir+"/Sprites/enemy.png")
-Follower = enemy_follower(platform, (WIDTH/2+150, HEIGHT/2+20),platform.relativeDir+"/Sprites/enemy.png")
+#Follower = enemy_follower(platform, (WIDTH/2+150, HEIGHT/2+20),platform.relativeDir+"/Sprites/enemy.png")
+#Follower = enemy_follower(platform, (WIDTH/2+150, HEIGHT/2+20),platform.relativeDir+"/Sprites/enemy.png")
+#enemy_follower(platform,((WIDTH/100), HEIGHT/100),platform.relativeDir+"/Sprites/enemy.png")
 
 platform.movable_sprites.add(P1)
 obs = obstacle((200,200))
